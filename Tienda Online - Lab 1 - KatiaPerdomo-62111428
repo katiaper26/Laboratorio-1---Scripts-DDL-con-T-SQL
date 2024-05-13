@@ -1,0 +1,48 @@
+-- base de datos TiendaOnline
+CREATE DATABASE TiendaOnline;
+
+-- Usar la base de datos TiendaOnline
+USE TiendaOnline;
+
+--  tabla Categorías
+CREATE TABLE Categorias (
+    id_categoria INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(50)
+);
+
+-- la tabla Productos
+CREATE TABLE Productos (
+    id_producto INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    descripcion TEXT,
+    precio DECIMAL(10, 2),
+    id_categoria INT,
+    FOREIGN KEY (id_categoria) REFERENCES Categorias(id_categoria)
+);
+
+-- la tabla Clientes
+CREATE TABLE Clientes (
+    id_cliente INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100),
+    email VARCHAR(100)
+);
+
+-- tabla Pedidos
+CREATE TABLE Pedidos (
+    id_pedido INT AUTO_INCREMENT PRIMARY KEY,
+    id_cliente INT,
+    fecha_pedido DATETIME,
+    estado VARCHAR(50),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente)
+);
+
+-- tabla DetallesPedido
+CREATE TABLE DetallesPedido (
+    id_detalle INT AUTO_INCREMENT PRIMARY KEY,
+    id_pedido INT,
+    id_producto INT,
+    cantidad INT,
+    precio_unitario DECIMAL(10, 2),
+    FOREIGN KEY (id_pedido) REFERENCES Pedidos(id_pedido),
+    FOREIGN KEY (id_producto) REFERENCES Productos(id_producto)
+);
